@@ -3,36 +3,30 @@
 #include <stdlib.h>
 #include <math.h>
 #include <float.h>
-
 struct Point {
     int x;
     int y;
 };
-
 struct Info {
     double distance;
     struct Point p1;
     struct Point p2;
 };
-
 struct Info min(struct Info x, struct Info y) {
     if (x.distance < y.distance)
         return x;
     else
         return y;
 }
-
 int compare_x_dist(const void *a, const void *b) {
     struct Point *p_a = (struct Point *) a;
     struct Point *p_b = (struct Point *) b;
     return (p_a->x - p_b->x);
 }
-
 int compare_y_dist(const void *a, const void *b) {
     struct Point *p_a = (struct Point *) a, *p_b = (struct Point *) b;
     return (p_a->y - p_b->y);
 }
-
 struct Info dist(struct Point p_a, struct Point p_b) {
     struct Info dInfo;
     dInfo.distance = sqrt(pow((p_a.x - p_b.x), 2) + pow((p_a.y - p_b.y), 2));
@@ -40,9 +34,6 @@ struct Info dist(struct Point p_a, struct Point p_b) {
     dInfo.p2 = p_b;
     return dInfo;
 }
-
-
-
 struct Info bruteForce(struct Point P[], int n) {
     struct Info dInfo;
     double min = DBL_MAX;
@@ -59,8 +50,6 @@ struct Info bruteForce(struct Point P[], int n) {
     }
     return dInfo;
 }
-
-
 struct Info collect_closest_points(struct Point narrow[], int size, double d) {
     struct Info dInfo;  
     int space = sizeof(struct Point);
@@ -80,8 +69,6 @@ struct Info collect_closest_points(struct Point narrow[], int size, double d) {
 
     return dInfo;
 }
-
-
 struct Info minimum_dist(struct Point P[], int n) {
     struct Info dInfo;
     if (2 <= n && n <= 3)
@@ -102,8 +89,6 @@ struct Info minimum_dist(struct Point P[], int n) {
             narrow[j] = P[i];
             j++;
         }
-
-
     if (j < 2) {
         return d;
     }
@@ -117,8 +102,6 @@ struct Info closestPair(struct Point P[], int n) {
     qsort(P, n, size, compare_x_dist);
     return minimum_dist(P, n);
 }
-
-
 int main() {
     struct Point A[MAX];
     struct Info m;
@@ -135,9 +118,6 @@ int main() {
         i++;
     }
     fclose(fp);
-
-
-
     m = closestPair(A, i);
     printf("\n\n\nClosest Distance: %.3f\n", m.distance);
     printf("Point 1: (%d, %d)\n", m.p1.x, m.p1.y);
